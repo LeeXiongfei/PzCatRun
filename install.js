@@ -12,8 +12,6 @@ function cloneRepository(gitUrl, folderName) {
         reject(false); // 如果出错，返回 false
         return;
       }
-      
-      console.log(`仓库克隆成功: ${stdout}`);
       resolve(true); // 成功返回 true
     });
   });
@@ -41,20 +39,6 @@ async function main(){
   for(let i = 1;i<11;i++){
     await cloneRepository('https://github.com/LeeXiongfei/PzCat.git','cat'+i);
   }
-  let instalQueue = [];
-  for(let i = 0;i<cwdList.length;i++){
-    let cwd = cwdList[i];
-    instalQueue.push(installInit(cwd))
-  }
-  await Promise.all(instalQueue)
-  console.log('依赖安装完成');
-  let buildQueue = [];
-  for(let i = 0;i<cwdList.length;i++){
-    let cwd = cwdList[i];
-    buildQueue.push(buildPro(cwd))
-  }
-  await Promise.all(buildQueue)
-  console.log('安装完成');
   
 }
 main()
