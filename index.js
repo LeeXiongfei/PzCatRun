@@ -5,6 +5,8 @@ const {getAddress,createWallte,printTable,waitForEnter,mint} = require('./tool.j
 const cwdList = require('./cwdList.json')
 const {getGas,getFBBanlce,getMintStatus} = require('./request.js')
 const Big = require('big.js')
+const { exec } = require('child_process');
+const path = require('path');
 // 计算当前账户是否有接下来mint的gas
 async function accountHasGas(address){
   let gas = await getGas();
@@ -28,8 +30,6 @@ async function mintCat(cwd){
     console.log('失败');
     return
   }
-  console.log('txid',result);
-  
   while(true){
     let queue = [];
     for(let i =0;i<result.length;i++){
@@ -39,7 +39,6 @@ async function mintCat(cwd){
     }
     let status = await Promise.all(queue);
     let count = status.filter(tx=>tx).length;
-    
     if(count == queue.length){
       break;
     }
@@ -68,10 +67,31 @@ async function startMint(cwd,address){
   }
 };
 
+
+async function deleteWallet(){
+  return new Promise((resolve)=>{
+    const scriptPath = path.join(__dirname, 'deleteWallet.sh');
+    exec(`sh ${scriptPath}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`执行脚本时出错: ${error.message}`);
+        return;
+      }
+      
+      if (stderr) {
+        console.error(`脚本错误输出: ${stderr}`);
+        return;
+      }
+      console.log(stdout);
+      resolve();
+    });
+  })
+}
 async function main(){
   while(true){
-    let step;
     let createWallteQueue = [];
+    console.clear();
+    await deleteWallet()
+    await waitForEnter('按回车开始工作.......')
     // 创建钱包
     for(let i = 0;i<cwdList.length;i++){
       let cwd = cwdList[i];
