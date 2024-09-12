@@ -1,0 +1,12 @@
+[
+  "./cat1/packages/cli",
+  "./cat2/packages/cli",
+  "./cat3/packages/cli",
+  "./cat4/packages/cli",
+  "./cat5/packages/cli",
+  "./cat6/packages/cli",
+  "./cat7/packages/cli",
+  "./cat8/packages/cli",
+  "./cat9/packages/cli",
+  "./cat10/packages/cli"
+]
