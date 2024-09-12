@@ -3,7 +3,7 @@
 
 const {getAddress,createWallte,printTable,waitForEnter,mint} = require('./tool.js')
 const cwdList = require('./cwdList.json')
-const {getGas,getFBBanlce} = require('./request.js')
+const {getGas,getFBBanlce,getMintStatus} = require('./request.js')
 const Big = require('big.js')
 // 计算当前账户是否有接下来mint的gas
 async function accountHasGas(address){
