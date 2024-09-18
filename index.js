@@ -33,7 +33,9 @@ async function mintCat(cwd){
   while(true){
     let queue = [];
     for(let i =0;i<result.length;i++){
-      let txid = result[i]
+      let txid = result[i];
+      console.log('txid:',txid);
+      
       let status =  getMintStatus(txid);
       queue.push(status)
     }
@@ -57,11 +59,13 @@ async function initWallet(cwd){
   }
 }
 async function startMint(cwd,address){
+  let count = 0;
   while(true){
+    count ++;
     // 查询当前地址gas是否充足
     let hasGas = await accountHasGas(address)
     if(!hasGas){
-      return true;
+      return {address,mes:'gas不足',status:1};
     }
     await mintCat(cwd);
   }
