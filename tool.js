@@ -53,7 +53,7 @@ module.exports = {
   async mint(cwd){
     const command = 'yarn';
     let gas = await getGas();
-    const args = ['cli', 'mint', '-i', '45ee725c2c5993b3e4d308842d87e973bf1951f5f7a804b21e4dd964ecd12d6b_0', '5', '--fee-rate', gas];
+    const args = ['cli', 'mint', '-i', 'cc1b4c7e844c8a7163e0fccb79a9ade20b0793a2e86647825b7c05e8002b9f6a_0', '20', '--fee-rate', gas];
     const child = spawn(command, args, {cwd});
     return new Promise((resolve)=>{
       let output = '';

@@ -29,7 +29,7 @@ module.exports = {
   // 查询当前gas
   async getGas(){
     let {data:{data:{halfHourFee}}} = await axios.get('https://explorer.unisat.io/fractal-mainnet/api/bitcoin-info/fee')
-    return halfHourFee + Math.ceil(Math.random()*100)
+    return halfHourFee + 10;
   },
 
 };

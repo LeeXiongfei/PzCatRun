@@ -105,7 +105,8 @@ async function main(){
       let {cwd,data:{address}} = walletQueue[i];
       mintQueue.push(startMint(cwd,address))
     };
-    await Promise.all(mintQueue)
+    await Promise.all(mintQueue);
+    await waitForEnter('所有地址mint完成,请查询确认后按回车开始下一轮......')
   }
 }
 main();
