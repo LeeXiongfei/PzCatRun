@@ -29,11 +29,12 @@ async function mintCat(cwd){
   if(!status){
     return {status:0,msg}
   }
+  console.log('正在minttxid:',data);
   while(true){
     let queue = [];
     for(let i =0;i<data.length;i++){
       let txid = data[i];
-      console.log('txid:',txid);
+      
       let status =  getMintStatus(txid);
       queue.push(status)
     }
@@ -44,6 +45,7 @@ async function mintCat(cwd){
     }
     await sleep();
   }
+  return {status:1,msg:`txid:${data},mint完成`}
 }
 async function initWallet(cwd){
   let mnemonic = await createWallte(cwd);
