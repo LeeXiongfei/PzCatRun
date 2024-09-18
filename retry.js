@@ -91,26 +91,22 @@ async function deleteWallet(){
   })
 }
 async function main(){
-  while(true){
-    let createWallteQueue = [];
-    console.clear();
-    // await deleteWallet()
-    await waitForEnter('按回车开始工作.......')
-    // 创建钱包
-    for(let i = 0;i<cwdList.length;i++){
-      let cwd = cwdList[i];
-      createWallteQueue.push(initWallet(cwd));
-    };
-    let walletQueue  = await Promise.all(createWallteQueue);
-    printTable(walletQueue.map(({data})=>data));
-    await waitForEnter('充值完成后按回车继续.......')
-    let mintQueue = [];
-    for(let i = 0;i<walletQueue.length;i++){
-      let {cwd,data:{address}} = walletQueue[i];
-      mintQueue.push(startMint(cwd,address))
-    };
-    await Promise.all(mintQueue);
-    await waitForEnter('所有地址mint完成,请查询确认后按回车开始下一轮......')
-  }
+  let createWallteQueue = [];
+  await waitForEnter('按回车开始工作.......')
+  // 创建钱包
+  for(let i = 0;i<cwdList.length;i++){
+    let cwd = cwdList[i];
+    createWallteQueue.push(initWallet(cwd));
+  };
+  let walletQueue  = await Promise.all(createWallteQueue);
+  printTable(walletQueue.map(({data})=>data));
+  await waitForEnter('充值完成后按回车继续.......')
+  let mintQueue = [];
+  for(let i = 0;i<walletQueue.length;i++){
+    let {cwd,data:{address}} = walletQueue[i];
+    mintQueue.push(startMint(cwd,address))
+  };
+  await Promise.all(mintQueue);
+  await waitForEnter('所有地址mint完成,请查询确认后按回车开始下一轮......');
 }
 main();
