@@ -25,17 +25,15 @@ function sleep(){
 
 async function mintCat(cwd){
   // 获取地址
-  let result = await mint(cwd);
-  if(!result){
-    console.log('失败');
-    return
+  let {status,data,msg} = await mint(cwd);
+  if(!status){
+    return {status:0,msg}
   }
   while(true){
     let queue = [];
-    for(let i =0;i<result.length;i++){
-      let txid = result[i];
+    for(let i =0;i<data.length;i++){
+      let txid = data[i];
       console.log('txid:',txid);
-      
       let status =  getMintStatus(txid);
       queue.push(status)
     }
@@ -46,10 +44,7 @@ async function mintCat(cwd){
     }
     await sleep();
   }
-  let balance = await getFBBanlce('bc1pftj2apmhrxkhdrw4804v0cayphmlxvx6ww3tzxrc6zqwfzlurwvqucw3jz');
 }
-
-
 async function initWallet(cwd){
   let mnemonic = await createWallte(cwd);
   let address = await getAddress(cwd);
@@ -67,7 +62,11 @@ async function startMint(cwd,address){
     if(!hasGas){
       return {address,mes:'gas不足',status:1};
     }
-    await mintCat(cwd);
+    let {msg,status} = await mintCat(cwd);
+    if(count > 10 && !status){
+      console.log(`${address}运行中触发中断,报错信息:${msg}`);
+      return false;
+    }
   }
 };
 
@@ -94,7 +93,7 @@ async function main(){
   while(true){
     let createWallteQueue = [];
     console.clear();
-    await deleteWallet()
+    // await deleteWallet()
     await waitForEnter('按回车开始工作.......')
     // 创建钱包
     for(let i = 0;i<cwdList.length;i++){

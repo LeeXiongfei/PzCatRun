@@ -56,7 +56,7 @@ module.exports = {
     let gas = await getGas();
     let gasToU = (new Big(gas)).times(0.000039) ;
     if(gasToU > 3){
-      return false
+      return {status:0,msg:'gas超过阈值'}
     }
     const args = ['cli', 'mint', '-i', 'cc1b4c7e844c8a7163e0fccb79a9ade20b0793a2e86647825b7c05e8002b9f6a_0', '20', '--fee-rate', gas];
     const child = spawn(command, args, {cwd});
@@ -67,7 +67,7 @@ module.exports = {
       });
       child.on('close', (code) => {
         let txid = matchAllTxid(output);
-        resolve(txid)
+        resolve({status:1,data:txid})
       });
     })
   },
