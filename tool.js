@@ -67,6 +67,10 @@ module.exports = {
       });
       child.on('close', (code) => {
         let txid = matchAllTxid(output);
+        if(!txid){
+          resolve({status:0,msg:'mint发起失败'});
+          return false;
+        }
         resolve({status:1,data:txid})
       });
     })

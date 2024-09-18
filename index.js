@@ -34,7 +34,6 @@ async function mintCat(cwd){
     let queue = [];
     for(let i =0;i<data.length;i++){
       let txid = data[i];
-      
       let status =  getMintStatus(txid);
       queue.push(status)
     }
