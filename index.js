@@ -94,7 +94,7 @@ async function main(){
   while(true){
     let createWallteQueue = [];
     console.clear();
-    // await deleteWallet()
+    await deleteWallet()
     await waitForEnter('按回车开始工作.......')
     // 创建钱包
     for(let i = 0;i<cwdList.length;i++){
